@@ -1,6 +1,17 @@
-import mongoose from "mongoose"
+import mongoose, { Document, Schema } from "mongoose";
 
-const UserSchema = new mongoose.Schema(
+// 🔥 Interface
+export interface IUser extends Document {
+  name: string;
+  email: string;
+  password: string;
+  role: "user" | "admin";
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// 🔥 Schema
+const UserSchema: Schema<IUser> = new Schema(
   {
     name: {
       type: String,
@@ -31,13 +42,16 @@ const UserSchema = new mongoose.Schema(
   {
     timestamps: true
   }
-)
+);
 
-// 🔒 nunca retornar senha quando buscar usuário
+// 🔒 Nunca retornar senha
 UserSchema.methods.toJSON = function () {
-  const obj = this.toObject()
-  delete obj.password
-  return obj
-}
+  const obj = this.toObject();
+  delete obj.password;
+  return obj;
+};
 
-export default mongoose.model("User", UserSchema)
+// 🔥 Model tipado
+const User = mongoose.model<IUser>("User", UserSchema);
+
+export default User;

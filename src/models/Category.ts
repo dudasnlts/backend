@@ -1,10 +1,28 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 
-const CategorySchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  descricao: { type: String }
-}, { timestamps: true });
+// Interface (tipagem)
+export interface ICategory extends Document {
+  name: string;
+  descricao?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
-// Garanta que o export default está exatamente assim:
-const Categorys = mongoose.model("Categorys", CategorySchema);
-export default Categorys;
+//  Schema
+const CategorySchema: Schema = new Schema(
+  {
+    name: { 
+      type: String, 
+      required: true 
+    },
+    descricao: { 
+      type: String 
+    }
+  },
+  { timestamps: true }
+);
+
+//  Model
+const Category = mongoose.model<ICategory>("Category", CategorySchema);
+
+export default Category;
