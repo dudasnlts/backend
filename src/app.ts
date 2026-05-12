@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import path from "path";
 
 import categoryRoute from "./routes/categoryRoute";
 import productsRoute from "./routes/productsRoute";
@@ -11,13 +12,30 @@ import orderRoutes from "./routes/orderRoutes";
 const app = express();
 
 app.use(cors());
+
 app.use(express.json());
 
+// LIBERAR IMAGENS DA PASTA UPLOADS
+
+app.use(
+  "/uploads",
+  express.static(
+    path.resolve("uploads")
+  )
+);
+
+// ROUTES
+
 app.use("/api/categories", categoryRoute);
+
 app.use("/api/products", productsRoute);
+
 app.use("/api/users", userRoutes);
+
 app.use("/api/auth", authRoutes);
+
 app.use("/api/cart", cartRoutes);
+
 app.use("/api/orders", orderRoutes);
 
 export default app;
