@@ -20,25 +20,49 @@ app.use(cors());
 
 app.use(express.json());
 
-// LIBERAR IMAGENS DA PASTA UPLOADS
+/*
+|--------------------------------------------------------------------------
+| LIBERAR ARQUIVOS DA PASTA UPLOADS
+|--------------------------------------------------------------------------
+| Agora imagens e vídeos poderão ser acessados:
+|
+| http://localhost:3333/uploads/video.mp4
+|
+*/
+
 app.use(
   "/uploads",
   express.static(
-    path.resolve("uploads")
+    path.join(__dirname, "..", "uploads")
   )
 );
 
-// ROUTES
+/*
+|--------------------------------------------------------------------------
+| ROUTES
+|--------------------------------------------------------------------------
+*/
+
 app.use("/api/categories", categoryRoute);
+
 app.use("/api/products", productsRoute);
+
 app.use("/api/users", userRoutes);
+
 app.use("/api/auth", authRoutes);
+
 app.use("/api/cart", cartRoutes);
+
 app.use("/api/orders", orderRoutes);
+
 app.use("/api/joias", joiasRoutes);
+
 app.use("/api/perfumes", perfumeRoutes);
+
 app.use("/api/pingentes", pingentesRoutes);
+
 app.use("/api/relogios", relogioRoutes);
+
 app.use("/api/sales", saleRoutes);
 
 export default app;
